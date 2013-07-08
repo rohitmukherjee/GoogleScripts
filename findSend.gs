@@ -1,9 +1,28 @@
-function syncAttachments() {
-  
+function doGet(){
+ //initializing app
+ var app = UiApp.createApplication();
+   var form = app.createFormPanel();
+   var flow = app.createFlowPanel();
+   flow.add(app.createTextBox().setName("textBox"));
+   flow.add(app.createTextBox().setName("textBox2"));
+   flow.add(app.createSubmitButton("Submit"));
+   form.add(flow);
+   app.add(form);
+   return app;
+
+
+}
+
+
+function doPost(eventInfo) { 
+   var app = UiApp.getActiveApplication();
   //script will find attachments in email from a particular sender and download them to google drive
   var emailHeader = "The following files were synced with GoogleDrive:";
-  var sender = "SENDER_EMAIL_ID_HERE";
-  var folderName = "FOLDER_NAME_HERE";
+  var sender = eventInfo.parameter.textBox;
+  var folderName = eventInfo.parameter.textBox2;
+  
+  //var sender = "emmeline.vandermeij@baml.com";
+  //var folderName = "Bank of America Merrill Lynch Documents";
   var threads = GmailApp.search(sender);
   var emailSubject = "Sync completed";
   
@@ -38,6 +57,8 @@ function syncAttachments() {
    Logger.log(fileListString);
   //Send yourself an email with a link to the document
   //GmailApp.sendEmail(emailAddress,emailSubject,emailHeader + '\n' + fileListString);
+  cleanUpDrive();
+  return app;
 
 }
 function cleanUpDrive() {
