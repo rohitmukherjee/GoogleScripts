@@ -2,8 +2,8 @@ function syncAttachments() {
   
   //script will find attachments in email from a particular sender and download them to google drive
   var emailHeader = "The following files were synced with GoogleDrive:";
-  var sender = "emmeline.vandermeij@baml.com";
-  var folderName = "Bank of America Merrill Lynch Documents";
+  var sender = "SENDER_EMAIL_ID_HERE";
+  var folderName = "FOLDER_NAME_HERE";
   var threads = GmailApp.search(sender);
   var emailSubject = "Sync completed";
   
@@ -20,7 +20,7 @@ function syncAttachments() {
    for (var z=0; z<att.length; z++) {
     try {
      // Copy the Gmail attachment to Google Drive
-     //var file = folder.createFile(att[z]);
+     var file = folder.createFile(att[z]);
      // Wait for a minute to prevent timeout errors
      Utilities.sleep(1000);
     }
